@@ -3,40 +3,38 @@
 
 char	*getstatic(int fd, char *box)
 {
-	int nr_bytes;
-	char *buffer;
-	
+	char	*buf;
+	int		nr_bytes;
+
 	if (!box)
-		box = ft_calloc(sizeof(char), 1);
-	buffer = ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
-	if (!buffer)
+		box = ft_calloc(sizeof(char), BUFFER_SIZE);
+	buf = ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
+	if (!buf)
 		return (NULL);
 	nr_bytes = 1;
-	while (!ft_strchr(buffer, '\n') && nr_bytes != 0)
+	while (!ft_strchr(buf, '\n') && nr_bytes != 0)
 	{
-		nr_bytes = read(fd, buffer, BUFFER_SIZE);
+		nr_bytes = read(fd, buf, BUFFER_SIZE);
 		if (nr_bytes == -1)
 		{
-			free(buffer);
+			free(buf);
 			free(box);
 			return (NULL);
 		}
-		buffer[nr_bytes] = '\0';
-		box = ft_strjoin(box, buffer);
+		buf[nr_bytes] = '\0';
+		box = ft_strjoin(box, buf);
 	}
-	free(buffer);
-	return(box);
-
+	free (buf);
+	return (box);
 }
 
 char	*ft_getline(char *box)
 {
 	char	*linea;
 	int		i;
-	int 	j;
 
 	i = 0;
-	j = 0;
+	linea = NULL;
 	if (!box[i])
 		return (NULL);
 	if (ft_strchr(box,'\n'))
@@ -46,42 +44,31 @@ char	*ft_getline(char *box)
 		linea = ft_substr(box, 0, i +1);
 		return(linea);
 	}
-	else if (!ft_strchr(box,'\n'))
-	while (box[i] != '\0')
-	{
-		i++;
-	}
-	linea = ft_substr(box, 0, i);
+	linea = ft_strdup(box);
 	return (linea);
 }
 
 char	*cleaner(char 	*box)
 {
-	size_t i;
-	size_t j;
+	int i;
+	int j;
 	char	*copy;
 
 	i = 0;
 	j = 0;
 	while (box[i] != '\n' && box[i]!= '\0')
-	{
 		i++;
-	}
-	if(!box)
+	if(!box[i])
 	{
 		free (box);
 		return (NULL);
 	}
-	copy = ft_calloc(sizeof(char), (ft_strlen(box) - i + 1));
+	copy = ft_calloc(sizeof(char), ft_strlen(box) - i + 1);
 	if (!copy)
 		return(NULL);
 	i++;
 	while (box[i])
-	{
-		copy[j] = box[i];
-		j++;
-		i++;
-	}
+		copy[j++] = box[i++];
 	free(box);
 	return(copy);
 }

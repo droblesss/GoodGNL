@@ -6,7 +6,7 @@
 /*   By: drobles <drobles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 11:10:26 by drobles           #+#    #+#             */
-/*   Updated: 2022/10/11 17:38:03 by drobles          ###   ########.fr       */
+/*   Updated: 2022/10/13 16:52:53 by drobles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ char	*ft_strdup(const char	*s1)
 		aux[i] = s1[i];
 		i++;
 	}
+	aux[i] = '\0';
 	return (aux);
 }
 void	*ft_calloc(size_t count, size_t size)
