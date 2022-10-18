@@ -6,7 +6,7 @@
 /*   By: drobles <drobles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 11:10:26 by drobles           #+#    #+#             */
-/*   Updated: 2022/10/13 16:52:53 by drobles          ###   ########.fr       */
+/*   Updated: 2022/10/17 17:37:33 by drobles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 
 int	ft_strlen(const char *str)
 {
-	int c;
+	int	c;
 
 	c = 0;
 	while (*str != '\0')
@@ -55,6 +55,7 @@ int	ft_strlen(const char *str)
 	}
 	return (c);
 }
+
 char	*ft_strdup(const char	*s1)
 {
 	char	*aux;
@@ -72,96 +73,37 @@ char	*ft_strdup(const char	*s1)
 	aux[i] = '\0';
 	return (aux);
 }
+
 void	*ft_calloc(size_t count, size_t size)
 {
-	void	*ptr;
+	char	*ptr;
+	size_t	i;
 
+	i = 0;
 	if (count == SIZE_MAX || size == SIZE_MAX)
 		return (NULL);
 	ptr = malloc(count * size);
 	if (ptr == NULL)
 		return (ptr);
-	ft_bzero(ptr, size * count);
+	while (i < count * size)
+	{
+		ptr[i] = '\0';
+		i++;
+	}
 	return (ptr);
-}
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned char		*c;
-	size_t				i;
-	int					j;
-
-	j = '\0';
-	c = s;
-	i = 0;
-	if (n > 0)
-	{
-		while (i < n)
-		{
-		c[i] = j;
-		i++;
-		}
-	}
-}
-size_t	ft_strcpy(char *dst, char *src)
-{
-	size_t	i;
-	
-	i = 0;
-	{
-		while (src[i])
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-	}
-	return (i);
-}
-char	*ft_strchr(char *s, int c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != (char)c)
-	{
-		if (!s[i])
-			return (NULL);
-		i++;
-	}
-	return ((char *)&s[i]);
-}
-
-char	*ft_strcat(char *dest, char *src)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (dest[i] != 0)
-	{
-		i++;
-	}
-	while (src[j] != 0)
-	{
-		dest[i + j] = src[j];
-		j++;
-	}
-	dest [i + j] = '\0';
-	return (dest);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*con;
 	size_t	i;
-	size_t	j;
+	size_t	z;
 
 	if (!s1)
 		return (NULL);
 	i = 0;
-	j = ft_strlen(s1) + ft_strlen(s2);
-	con = ft_calloc(sizeof(char), (j + 1));
+	z = 0;
+	con = ft_calloc(sizeof(char), ((ft_strlen(s1) + ft_strlen(s2)) + 1));
 	if (!con || !s1 || !s2)
 		return (NULL);
 	while (s1[i])
@@ -169,7 +111,11 @@ char	*ft_strjoin(char *s1, char *s2)
 		con[i] = s1[i];
 		i++;
 	}
-	ft_strcat(con, s2);
+	while (s2[z])
+	{
+		con[i + z] = s2[z];
+		z++;
+	}
 	free(s1);
 	return (con);
 }

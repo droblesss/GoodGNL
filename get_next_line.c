@@ -1,5 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: drobles <drobles@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/17 15:39:34 by drobles           #+#    #+#             */
+/*   Updated: 2022/10/17 17:06:33 by drobles          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_strchr(char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != (char)c)
+	{
+		if (!s[i])
+			return (NULL);
+		i++;
+	}
+	return ((char *)&s[i]);
+}
 
 char	*getstatic(int fd, char *box)
 {
@@ -37,52 +62,52 @@ char	*ft_getline(char *box)
 	linea = NULL;
 	if (!box[i])
 		return (NULL);
-	if (ft_strchr(box,'\n'))
+	if (ft_strchr(box, '\n'))
 	{
 		while (box[i] != '\n')
 			i++;
 		linea = ft_substr(box, 0, i +1);
-		return(linea);
+		return (linea);
 	}
 	linea = ft_strdup(box);
 	return (linea);
 }
 
-char	*cleaner(char 	*box)
+char	*cleaner(char *box)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 	char	*copy;
 
 	i = 0;
 	j = 0;
-	while (box[i] != '\n' && box[i]!= '\0')
+	while (box[i] != '\n' && box[i] != '\0')
 		i++;
-	if(!box[i])
+	if (!box[i])
 	{
 		free (box);
 		return (NULL);
 	}
 	copy = ft_calloc(sizeof(char), ft_strlen(box) - i + 1);
 	if (!copy)
-		return(NULL);
+		return (NULL);
 	i++;
 	while (box[i])
 		copy[j++] = box[i++];
-	free(box);
-	return(copy);
+	free (box);
+	return (copy);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	char 		*linea;
-	static char *box;
-	
+	char		*linea;
+	static char	*box;
+
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
 	box = getstatic(fd, box);
 	if (!box)
-		return(NULL);
+		return (NULL);
 	linea = ft_getline(box);
 	box = cleaner(box);
 	return (linea);
