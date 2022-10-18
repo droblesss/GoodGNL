@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: drobles <drobles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:39:34 by drobles           #+#    #+#             */
-/*   Updated: 2022/10/18 16:56:58 by drobles          ###   ########.fr       */
+/*   Updated: 2022/10/18 16:59:25 by drobles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strchr(char *s, int c)
 {
@@ -101,21 +101,22 @@ char	*cleaner(char *box)
 char	*get_next_line(int fd)
 {
 	char		*linea;
-	static char	*box;
+	static char	*box[1000000];
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
-	box = getstatic(fd, box);
-	if (!box)
+	box[fd] = getstatic(fd, box[fd]);
+	if (!box[fd])
 		return (NULL);
-	linea = ft_getline(box);
-	box = cleaner(box);
+	linea = ft_getline(box[fd]);
+	box[fd] = cleaner(box[fd]);
 	return (linea);
 }
 // int main()
 // {
 // 	int fd;
 // 	char *ptr;
+
 // 	fd = open("/Users/drobles/Goodgnl/GoodGNL/el_quijote.txt", O_RDONLY);
 // 	printf("%d\n", fd);
 // 	while (fd) 
